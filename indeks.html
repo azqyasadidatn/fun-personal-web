@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Fun Personal Web</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Variabel Warna Pastel */
+        :root {
+            --primary-pastel: #FFD1DC; /* Soft Pink / Rose - Utama */
+            --secondary-pastel-1: #B0E0E6; /* Powder Blue - Pelengkap 1 */
+            --secondary-pastel-2: #CCEECC; /* Mint Cream - Pelengkap 2 */
+            --secondary-pastel-3: #FFFACD; /* Lemon Chiffon - Pelengkap 3 */
+
+            --text-light: #333;
+            --background-light: #fdfdfd;
+            --card-background-light: #ffffff;
+            --border-light: #e0e0e0;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+
+            /* Variabel Warna Dark Mode */
+            --primary-dark: #8E44AD; /* Muted Purple */
+            --secondary-dark-1: #3498DB; /* Muted Blue */
+            --secondary-dark-2: #27AE60; /* Muted Green */
+            --secondary-dark-3: #F1C40F; /* Muted Yellow */
+
+            --text-dark: #eee;
+            --background-dark: #1a1a2e; /* Dark Blue-Grey */
+            --card-background-dark: #2c2c4d;
+            --border-dark: #444;
+            --shadow-dark: rgba(0, 0, 0, 0.3);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--background-light);
+            color: var(--text-light);
+            transition: all 0.3s ease;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        body.dark {
+            background: var(--background-dark);
+            color: var(--text-dark);
+        }
+
+        /* ==== Navbar (Header) Section ==== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--primary-pastel);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            z-index: 1000;
+            box-shadow: 0 2px 5px var(--shadow-light);
+            border-radius: 0 0 15px 15px; /* Rounded bottom corners */
+        }
+
+        body.dark header {
+            background: var(--primary-dark);
+            box-shadow: 0 2px 5px var(--shadow-dark);
+        }
+
+        .logo {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--text-light);
+        }
+        body.dark .logo {
+            color: var(--text-dark);
+        }
+
+        nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: inherit;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 0.5rem 0.8rem;
+            border-radius: 8px;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.3);
+            color: var(--text-light);
+        }
+        body.dark nav a:hover {
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--text-dark);
+        }
+        /* Style for active theme link */
+        nav a.active-theme {
+            background: var(--secondary-pastel-1);
+            color: var(--text-light);
+            font-weight: 600;
+        }
+        body.dark nav a.active-theme {
+            background: var(--secondary-dark-1);
+            color: var(--text-dark);
+        }
+
+
+        .burger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .burger div {
+            width: 25px;
+            height: 3px;
+            background: var(--text-light);
+            margin: 3px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        body.dark .burger div {
+            background: var(--text-dark);
+        }
+
+        /* Removed #darkToggle as theme selection is now in nav */
+        /* #darkToggle {
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--text-light);
+            transition: color 0.3s ease;
+        }
+        body.dark #darkToggle {
+            color: var(--text-dark);
+        }
+        body.dark #darkToggle:hover {
+            color: var(--secondary-dark-1);
+        } */
+
+        @media (max-width: 768px) {
+            nav {
+                position: absolute;
+                top: 70px; /* Adjust based on header height */
+                right: 1.5rem;
+                background: var(--primary-pastel);
+                flex-direction: column;
+                display: none;
+                border-radius: 10px;
+                padding: 15px;
+                box-shadow: 0 5px 15px var(--shadow-light);
+                min-width: 150px;
+            }
+            body.dark nav {
+                background: var(--primary-dark);
+                box-shadow: 0 5px 15px var(--shadow-dark);
+            }
+            nav.show {
+                display: flex;
+            }
+            .burger {
+                display: flex;
+            }
+            nav a {
+                padding: 0.8rem 1rem;
+            }
+        }
+
+        main {
+            padding-top: 80px; /* Space for fixed header */
+        }
+
+        /* ==== Section Card Styling ==== */
+        section {
+            display: none;
+            padding: 2.5rem;
+            margin: 2rem auto;
+            max-width: 900px;
+            background: var(--card-background-light);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px var(--shadow-light);
+            min-height: calc(100vh - 120px); /* Adjust to fit screen with padding */
+            animation: fadeIn 0.5s ease-out forwards;
+            border: 1px solid var(--border-light);
+        }
+        body.dark section {
+            background: var(--card-background-dark);
+            box-shadow: 0 4px 15px var(--shadow-dark);
+            border: 1px solid var(--border-dark);
+        }
+
+        section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1, h2, h3, h4 {
+            color: var(--primary-pastel);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        body.dark h1, body.dark h2, body.dark h3, body.dark h4 {
+            color: var(--primary-dark);
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        button {
+            background: var(--secondary-pastel-1);
+            color: var(--text-light);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 3px 6px var(--shadow-light);
+        }
+        body.dark button {
+            background: var(--secondary-dark-1);
+            color: var(--text-dark);
+            box-shadow: 0 3px 6px var(--shadow-dark);
+        }
+
+        button:hover {
+            background: var(--secondary-pastel-2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px var(--shadow-light);
+        }
+        body.dark button:hover {
+            background: var(--secondary-dark-2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px var(--shadow-dark);
+        }
+
+        input[type="number"], input[type="text"] {
+            padding: 0.7rem 1rem;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            background: var(--background-light);
+            color: var(--text-light);
+            transition: border-color 0.3s ease;
+        }
+        body.dark input[type="number"], body.dark input[type="text"] {
+            border: 1px solid var(--border-dark);
+            background: var(--card-background-dark);
+            color: var(--text-dark);
+        }
+
+        input[type="number"]:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary-pastel);
+            box-shadow: 0 0 0 3px rgba(255, 209, 220, 0.5);
+        }
+        body.dark input[type="number"]:focus, body.dark input[type="text"]:focus {
+            border-color: var(--primary-dark);
+            box-shadow: 0 0 0 3px rgba(142, 68, 173, 0.5);
+        }
+
+        /* ==== Home Section ==== */
+        #home {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        #home h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-pastel);
+        }
+        body.dark #home h1 {
+            color: var(--primary-dark);
+        }
+        #home p {
+            font-size: 1.2rem;
+            max-width: 600px;
+        }
+
+        /* ==== Tebak MBTI Section ==== */
+        #quiz form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .quiz-question {
+            background: var(--background-light);
+            padding: 1.2rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-light);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        body.dark .quiz-question {
+            background: var(--card-background-dark);
+            border: 1px solid var(--border-dark);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        .quiz-question h4 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            color: var(--secondary-pastel-1);
+            text-align: left;
+        }
+        body.dark .quiz-question h4 {
+            color: var(--secondary-dark-1);
+        }
+        .quiz-question label {
+            display: block;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+        }
+        .quiz-question input[type="radio"] {
+            margin-right: 0.8rem;
+            transform: scale(1.2);
+            accent-color: var(--primary-pastel); /* Custom radio button color */
+        }
+        body.dark .quiz-question input[type="radio"] {
+            accent-color: var(--primary-dark);
+        }
+        #quizResult {
+            margin-top: 1.5rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-align: center;
+            color: var(--secondary-pastel-3);
+        }
+        body.dark #quizResult {
+            color: var(--secondary-dark-3);
+        }
+
+        /* ==== Mini Snake Game Section ==== */
+        #game .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        #game canvas {
+            background-color: var(--secondary-pastel-3); /* Pale yellow for game background */
+            border: 5px solid var(--primary-pastel);
+            border-radius: 10px;
+            display: block;
+            touch-action: none; /* Disable default touch actions like pan and zoom */
+            max-width: 100%; /* Ensure canvas is responsive */
+            height: auto; /* Maintain aspect ratio */
+        }
+        body.dark #game canvas {
+            background-color: #333; /* Darker background for game in dark mode */
+            border: 5px solid var(--primary-dark);
+        }
+        #game .game-info {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            max-width: 400px;
+            font-weight: 600;
+        }
+        #game .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        #game .controls .row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        #game .controls button {
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px var(--shadow-light);
+            background: var(--secondary-pastel-1);
+            color: var(--text-light);
+        }
+        body.dark #game .controls button {
+            box-shadow: 0 4px 8px var(--shadow-dark);
+            background: var(--secondary-dark-1);
+            color: var(--text-dark);
+        }
+        #game .controls button:hover {
+            background: var(--secondary-pastel-2);
+            transform: scale(1.05);
+        }
+        body.dark #game .controls button:hover {
+            background: var(--secondary-dark-2);
+            transform: scale(1.05);
+        }
+        #game .game-message {
+            margin-top: 1rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-pastel);
+        }
+        body.dark #game .game-message {
+            color: var(--primary-dark);
+        }
+
+        /* ==== Pomodoro Section ==== */
+        #pomodoro .timer-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        #pomodoro #timerDisplay {
+            font-size: 5rem;
+            font-weight: bold;
+            color: var(--primary-pastel);
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        }
+        body.dark #pomodoro #timerDisplay {
+            color: var(--primary-dark);
+        }
+        #pomodoro .timer-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        #pomodoro button {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 10px;
+        }
+        #pomodoro p {
+            font-size: 1.1rem;
+            color: var(--secondary-pastel-1);
+            font-weight: 500;
+        }
+        body.dark #pomodoro p {
+            color: var(--secondary-dark-1);
+        }
+
+        /* ==== About Section ==== */
+        #about {
+            text-align: center;
+        }
+        .about-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            display: block;
+            margin: 0 auto 25px;
+            object-fit: cover;
+            border: 5px solid var(--secondary-pastel-1);
+            box-shadow: 0 5px 15px var(--shadow-light);
+        }
+        body.dark .about-img {
+            border: 5px solid var(--secondary-dark-1);
+            box-shadow: 0 5px 15px var(--shadow-dark);
+        }
+        .about-img:hover {
+            transform: scale(1.02);
+            transition: transform 0.3s ease;
+        }
+        .socials {
+            text-align: center;
+            font-size: 2rem;
+            margin-top: 2rem;
+        }
+        .socials a {
+            color: var(--secondary-pastel-2);
+            margin: 0 15px;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+        body.dark .socials a {
+            color: var(--secondary-dark-2);
+        }
+        .socials a:hover {
+            color: var(--primary-pastel);
+            transform: translateY(-3px);
+        }
+        body.dark .socials a:hover {
+            color: var(--primary-dark);
+        }
+    </style>
+</head>
+<body>
+    <!-- ==== Navbar Section ==== -->
+    <header>
+        <div class="logo">Fun Web</div>
+        <nav id="nav">
+            <a onclick="showSection('home')">Home</a>
+            <a onclick="showSection('quiz')">Tebak MBTI</a>
+            <a onclick="showSection('game')">Mini Snake Game</a>
+            <a onclick="showSection('pomodoro')">Pomodoro</a>
+            <a onclick="showSection('about')">About</a>
+            <!-- New Theme Selection Links -->
+            <a id="lightModeLink" onclick="setTheme('light')">Mode Siang</a>
+            <a id="darkModeLink" onclick="setTheme('dark')">Mode Malam</a>
+        </nav>
+        <div class="burger" onclick="toggleBurger()">
+            <div></div><div></div><div></div>
+        </div>
+        <!-- Removed the old darkToggle icon -->
+        <!-- <div id="darkToggle" onclick="toggleDarkMode()">
+            <i class="fas fa-moon"></i>
+        </div> -->
+    </header>
+
+    <main>
+        <!-- ==== Home Section ==== -->
+        <section id="home" class="active">
+            <h1>Selamat Datang di Fun Personal Web!</h1>
+            <p>Tempat seru untuk kenal dirimu, ayo belajar dengan menggunakan timer pomodoro dan ambil rehat sejenak dan main game kecil dan menghibur</p>
+        </section>
+
+        <!-- ==== Tebak MBTI Section ==== -->
+        <section id="quiz">
+            <h2>Tebak MBTI</h2>
+            <form id="quizForm">
+                <!-- Question 1: E/I - Energy Orientation -->
+                <div class="quiz-question"><h4>1. Ketika baterai sosialmu habis, kamu mengisi ulang dengan:</h4>
+                    <label><input type="radio" name="q1" value="E"> Bertemu banyak orang dan bersosialisasi.</label><br>
+                    <label><input type="radio" name="q1" value="I"> Menghabiskan waktu sendirian atau dengan teman dekat.</label>
+                </div>
+                <!-- Question 2: S/N - Information Gathering -->
+                <div class="quiz-question"><h4>2. Saat mempelajari hal baru, kamu lebih fokus pada:</h4>
+                    <label><input type="radio" name="q2" value="S"> Fakta, detail, dan pengalaman konkret.</label><br>
+                    <label><input type="radio" name="q2" value="N"> Konsep, ide besar, dan kemungkinan masa depan.</label>
+                </div>
+                <!-- Question 3: T/F - Decision Making -->
+                <div class="quiz-question"><h4>3. Ketika membuat keputusan penting, kamu cenderung mengandalkan:</h4>
+                    <label><input type="radio" name="q3" value="T"> Analisis logis, objektivitas, dan konsekuensi.</label><br>
+                    <label><input type="radio" name="q3" value="F"> Nilai-nilai pribadi, empati, dan dampak pada orang lain.</label>
+                </div>
+                <!-- Question 4: J/P - Lifestyle -->
+                <div class="quiz-question"><h4>4. Kamu paling nyaman dengan gaya hidup yang:</h4>
+                    <label><input type="radio" name="q4" value="J"> Terstruktur, terencana, dan memiliki tujuan jelas.</label><br>
+                    <label><input type="radio" name="q4" value="P"> Fleksibel, spontan, dan terbuka terhadap opsi baru.</label>
+                </div>
+                <!-- Additional Questions (Total 19) -->
+
+                <!-- E/I -->
+                <div class="quiz-question"><h4>5. Dalam sebuah pesta, kamu cenderung:</h4>
+                    <label><input type="radio" name="q5" value="E"> Berinteraksi dengan banyak orang baru.</label><br>
+                    <label><input type="radio" name="q5" value="I"> Mengamati dari jauh atau berbicara dengan sedikit orang yang kamu kenal.</label>
+                </div>
+                <div class="quiz-question"><h4>6. Setelah hari yang panjang, kamu merasa lebih segar jika:</h4>
+                    <label><input type="radio" name="q6" value="E"> Pergi keluar dan bersosialisasi.</label><br>
+                    <label><input type="radio" name="q6" value="I"> Bersantai sendirian di rumah.</label>
+                </div>
+
+                <!-- S/N -->
+                <div class="quiz-question"><h4>7. Saat membaca buku, kamu lebih suka:</h4>
+                    <label><input type="radio" name="q7" value="S"> Cerita yang realistis dengan banyak detail.</label><br>
+                    <label><input type="radio" name="q7" value="N"> Cerita fantasi atau fiksi ilmiah yang imajinatif.</label>
+                </div>
+                <div class="quiz-question"><h4>8. Kamu cenderung memikirkan:</h4>
+                    <label><input type="radio" name="q8" value="S"> Apa yang terjadi saat ini dan bagaimana menyelesaikannya.</label><br>
+                    <label><input type="radio" name="q8" value="N"> Kemungkinan di masa depan dan ide-ide abstrak.</label>
+                </div>
+                <div class="quiz-question"><h4>9. Kamu lebih mudah mengingat:</h4>
+                    <label><input type="radio" name="q9" value="S"> Fakta dan kejadian spesifik.</label><br>
+                    <label><input type="radio" name="q9" value="N"> Pola, hubungan, dan makna tersembunyi.</label>
+                </div>
+
+                <!-- T/F -->
+                <div class="quiz-question"><h4>10. Saat ada konflik, kamu lebih cenderung:</h4>
+                    <label><input type="radio" name="q10" value="T"> Mencari solusi logis dan adil.</label><br>
+                    <label><input type="radio" name="q10" value="F"> Mempertimbangkan perasaan semua orang yang terlibat.</label>
+                </div>
+                <div class="quiz-question"><h4>11. Pujian yang paling berarti bagimu adalah:</h4>
+                    <label><input type="radio" name="q11" value="T"> Pengakuan atas kemampuan dan kompetensimu.</label><br>
+                    <label><input type="radio" name="q11" value="F"> Penghargaan atas kepribadian dan nilai-nilai dirimu.</label>
+                </div>
+                <div class="quiz-question"><h4>12. Saat mengkritik, kamu cenderung:</h4>
+                    <label><input type="radio" name="q12" value="T"> Langsung pada poin dan objektif.</label><br>
+                    <label><input type="radio" name="q12" value="F"> Lembut dan mempertimbangkan perasaan orang lain.</label>
+                </div>
+                <div class="quiz-question"><h4>13. Kamu lebih suka percakapan yang:</h4>
+                    <label><input type="radio" name="q13" value="T"> Berfokus pada ide, teori, dan analisis.</label><br>
+                    <label><input type="radio" name="q13" value="F"> Berfokus pada hubungan, perasaan, dan pengalaman pribadi.</label>
+                </div>
+
+                <!-- J/P -->
+                <div class="quiz-question"><h4>14. Ketika merencanakan liburan, kamu:</h4>
+                    <label><input type="radio" name="q14" value="J"> Membuat jadwal detail dan daftar kegiatan.</label><br>
+                    <label><input type="radio" name="q14" value="P"> Membiarkannya mengalir dan memutuskan di tempat.</label>
+                </div>
+                <div class="quiz-question"><h4>15. Di hari kerja, kamu lebih suka:</h4>
+                    <label><input type="radio" name="q15" value="J"> Mengikuti rutinitas dan menyelesaikan tugas tepat waktu.</label><br>
+                    <label><input type="radio" name="q15" value="P"> Fleksibel dengan tugas dan jadwal, siap untuk hal tak terduga.</label>
+                </div>
+                <div class="quiz-question"><h4>16. Kamu merasa lebih nyaman ketika:</h4>
+                    <label><input type="radio" name="q16" value="J"> Hal-hal sudah diselesaikan dan ada kepastian.</label><br>
+                    <label><input type="radio" name="q16" value="P"> Masih ada banyak pilihan dan terbuka untuk perubahan.</label>
+                </div>
+                <div class="quiz-question"><h4>17. Meja kerjamu cenderung:</h4>
+                    <label><input type="radio" name="q17" value="J"> Rapi dan teratur.</label><br>
+                    <label><input type="radio" name="q17" value="P"> Agak berantakan tapi kamu tahu di mana semuanya.</label>
+                </div>
+                <div class="quiz-question"><h4>18. Kamu lebih suka:</h4>
+                    <label><input type="radio" name="q18" value="J"> Mengatur dan mengendalikan lingkunganmu.</label><br>
+                    <label><input type="radio" name="q18" value="P"> Beradaptasi dengan lingkungan dan melihat apa yang terjadi.</label>
+                </div>
+                <div class="quiz-question"><h4>19. Saat deadline mendekat, kamu:</h4>
+                    <label><input type="radio" name="q19" value="J"> Menyelesaikan pekerjaan jauh sebelum deadline.</label><br>
+                    <label><input type="radio" name="q19" value="P"> Bekerja lebih baik di bawah tekanan dan seringkali mendekati deadline.</label>
+                </div>
+
+                <button type="submit">Lihat Hasil MBTI</button>
+            </form>
+            <p id="quizResult"></p>
+        </section>
+
+        <!-- ==== Mini Snake Game Section ==== -->
+        <section id="game">
+            <h2>Mini Snake Game</h2>
+            <p>Makan makanan untuk membuat cacingmu bertambah panjang!</p>
+            <div class="game-container">
+                <!-- Changed width and height for smaller canvas -->
+                <canvas id="snakeCanvas" width="300" height="300"></canvas>
+                <div class="game-info">
+                    <p>Skor: <span id="scoreDisplay">0</span></p>
+                    <p id="gameStatus">Tekan tombol panah untuk memulai</p>
+                </div>
+                <div class="controls">
+                    <div class="row">
+                        <button id="upBtn" aria-label="Up">??</button>
+                    </div>
+                    <div class="row">
+                        <button id="leftBtn" aria-label="Left">??</button>
+                        <button id="downBtn" aria-label="Down">??</button>
+                        <button id="rightBtn" aria-label="Right">??</button>
+                    </div>
+                    <button id="restartGameBtn">Mulai Ulang</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==== Pomodoro Section ==== -->
+        <section id="pomodoro">
+            <h2>Pomodoro Timer</h2>
+            <p id="timerStatus">Waktu untuk fokus!</p>
+            <div class="timer-container">
+                <div id="timerDisplay">25:00</div>
+                <div class="timer-buttons">
+                    <button id="startTimerBtn">Mulai</button>
+                    <button id="pauseTimerBtn">Jeda</button>
+                    <button id="resetTimerBtn">Reset</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==== About Section ==== -->
+        <section id="about">
+            <h2>Tentang Azqya</h2>
+            <img src="profil" alt="Foto Azqya" class="about-img">
+            <p style="text-align:center;">Made with ?? by <strong>Azqya</strong></p>
+            <div class="socials">
+                <a href="https://www.instagram.com/qqqqq_nnisa?igsh=MW40b3JjdTk0dXVvZQ==" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://wa.me/message/M63NNRU5ODOSO1" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://open.spotify.com/playlist/6pEsMhF6Ax7Qc9rjihjlME?si=WGjklBVER-qbtHsm4Mopiw&pt=054daeeeeb58458ec0b67ebd95822096" target="_blank"><i class="fab fa-spotify"></i></a>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // --- Global Functions ---
+        /**
+         * Tampilkan bagian (section) yang dipilih dan sembunyikan yang lain.
+         * Juga menyembunyikan menu burger jika terbuka.
+         * @param {string} id - ID dari section yang akan ditampilkan.
+         */
+        function showSection(id) {
+            document.querySelectorAll('section').forEach(sec => {
+                sec.classList.remove('active');
+            });
+            document.getElementById(id).classList.add('active');
+            // Sembunyikan menu burger setelah klik jika di mobile
+            document.getElementById('nav').classList.remove('show');
+        }
+
+        /**
+         * Mengaktifkan atau menonaktifkan tampilan menu burger.
+         */
+        function toggleBurger() {
+            document.getElementById('nav').classList.toggle('show');
+        }
+
+        /**
+         * Mengatur tema terang atau gelap.
+         * @param {string} mode - 'light' atau 'dark'.
+         */
+        function setTheme(mode) {
+            document.body.classList.remove('light', 'dark'); // Bersihkan kelas tema yang ada
+            if (mode === 'dark') {
+                document.body.classList.add('dark');
+            } else {
+                // Default ke light mode jika bukan 'dark'
+                // document.body.classList.add('light'); // Tidak perlu kelas 'light' jika default
+            }
+            updateActiveThemeLink(mode); // Perbarui tampilan tautan tema yang aktif
+            // Simpan preferensi tema ke localStorage
+            localStorage.setItem('theme', mode);
+        }
+
+        /**
+         * Memperbarui kelas 'active-theme' pada tautan Mode Siang/Malam.
+         * @param {string} currentMode - Mode tema yang sedang aktif ('light' atau 'dark').
+         */
+        function updateActiveThemeLink(currentMode) {
+            const lightLink = document.getElementById('lightModeLink');
+            const darkLink = document.getElementById('darkModeLink');
+
+            if (lightLink && darkLink) {
+                if (currentMode === 'light') {
+                    lightLink.classList.add('active-theme');
+                    darkLink.classList.remove('active-theme');
+                } else {
+                    darkLink.classList.add('active-theme');
+                    lightLink.classList.remove('active-theme');
+                }
+            }
+        }
+
+
+        // --- Initial Load ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Tampilkan section 'home' secara default
+            showSection('home');
+
+            // Cek preferensi tema dari localStorage atau sistem operasi
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                setTheme(savedTheme);
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                setTheme('dark');
+            } else {
+                setTheme('light'); // Default ke light mode jika tidak ada preferensi
+            }
+        });
+
+
+        // --- Tebak MBTI Logic ---
+        document.getElementById('quizForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Object untuk menyimpan skor tiap dimensi
+            const scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+            const totalQuestions = 19; // Total questions
+
+            // Mengumpulkan jawaban dan menghitung skor
+            for (let i = 1; i <= totalQuestions; i++) {
+                const qName = `q${i}`;
+                const checked = document.querySelector(`input[name=${qName}]:checked`);
+                if (checked) {
+                    scores[checked.value]++;
+                }
+            }
+
+            // Menentukan tipe MBTI berdasarkan skor mayoritas
+            const energy = scores.E >= scores.I ? 'E' : 'I';
+            const information = scores.S >= scores.N ? 'S' : 'N';
+            const decision = scores.T >= scores.F ? 'T' : 'F';
+            const lifestyle = scores.J >= scores.P ? 'J' : 'P';
+
+            const mbtiType = energy + information + decision + lifestyle;
+            let resultText = `Tipe MBTI-mu kemungkinan adalah <strong>${mbtiType}</strong>! `;
+
+            // Deskripsi singkat untuk beberapa tipe umum
+            const mbtiDescriptions = {
+                ISTJ: "Kamu praktis, logis, dan bertanggung jawab.",
+                ISFJ: "Kamu peduli, bertanggung jawab, dan suportif.",
+                INFJ: "Kamu idealis, intuitif, dan memiliki visi.",
+                INTJ: "Kamu strategis, independen, dan berorientasi pada tujuan.",
+                ISTP: "Kamu analitis, spontan, dan menyukai petualangan.",
+                ISFP: "Kamu artistik, sensitif, dan menghargai kebebasan.",
+                INFP: "Kamu kreatif, idealis, dan penuh empati.",
+                INTP: "Kamu logis, inovatif, dan senang memecahkan masalah.",
+                ESTP: "Kamu energik, realistis, dan berorientasi pada tindakan.",
+                ESFP: "Kamu antusias, spontan, dan menyukai interaksi sosial.",
+                ENFP: "Kamu bersemangat, karismatik, dan penuh ide.",
+                ENTP: "Kamu cerdas, debat, dan menyukai tantangan intelektual.",
+                ESTJ: "Kamu pemimpin alami, terorganisir, dan efisien.",
+                ESFJ: "Kamu ramah, kooperatif, dan perhatian terhadap orang lain.",
+                ENFJ: "Kamu inspiratif, karismatik, dan berfokus pada pertumbuhan orang lain.",
+                ENTJ: "Kamu visioner, tegas, dan seorang pemimpin yang kuat."
+            };
+
+            resultText += mbtiDescriptions[mbtiType] || "Hasil unik! Kamu spesial dan mungkin memiliki kombinasi sifat yang menarik.";
+            document.getElementById('quizResult').innerHTML = resultText;
+        });
+
+
+        // --- Mini Snake Game Logic ---
+        const snakeCanvas = document.getElementById('snakeCanvas');
+        const ctx = snakeCanvas.getContext('2d');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const gameStatus = document.getElementById('gameStatus');
+        const restartGameBtn = document.getElementById('restartGameBtn');
+        const upBtn = document.getElementById('upBtn');
+        const downBtn = document.getElementById('downBtn');
+        const leftBtn = document.getElementById('leftBtn');
+        const rightBtn = document.getElementById('rightBtn');
+
+        const gridSize = 15; // Ukuran satu "kotak" di grid (px) - Changed for smaller canvas
+        let snake = [{ x: 10, y: 10 }]; // Posisi awal cacing
+        let food = {}; // Posisi makanan
+        let direction = ''; // Arah gerakan: 'up', 'down', 'left', 'right'
+        let score = 0;
+        let gameInterval;
+        let gameSpeed = 150; // Kecepatan game (milidetik per frame)
+        let isGameOver = false;
+
+        /**
+         * Menggambar semua elemen di canvas.
+         */
+        function draw() {
+            ctx.clearRect(0, 0, snakeCanvas.width, snakeCanvas.height); // Bersihkan canvas
+
+            // Warna untuk elemen game, disesuaikan dengan tema pastel
+            const snakeColor = document.body.classList.contains('dark') ? '#4CAF50' : '#8BC34A'; // Hijau cacing
+            const foodColor = document.body.classList.contains('dark') ? '#FF5722' : '#FF9800'; // Oranye makanan
+
+            // Gambar makanan
+            ctx.fillStyle = foodColor;
+            ctx.fillRect(food.x * gridSize, food.y * gridSize, gridSize, gridSize);
+
+            // Gambar cacing
+            ctx.fillStyle = snakeColor;
+            snake.forEach(segment => {
+                ctx.fillRect(segment.x * gridSize, segment.y * gridSize, gridSize, gridSize);
+                // Tambahkan sedikit border untuk efek 3D
+                ctx.strokeStyle = document.body.classList.contains('dark') ? '#388E3C' : '#689F38';
+                ctx.strokeRect(segment.x * gridSize, segment.y * gridSize, gridSize, gridSize);
+            });
+        }
+
+        /**
+         * Memperbarui posisi cacing dan logika game.
+         */
+        function update() {
+            if (isGameOver) return;
+
+            const head = { x: snake[0].x, y: snake[0].y };
+
+            // Pindahkan kepala sesuai arah
+            switch (direction) {
+                case 'up': head.y--; break;
+                case 'down': head.y++; break;
+                case 'left': head.x--; break;
+                case 'right': head.x++; break;
+            }
+
+            // Cek tabrakan dinding
+            if (
+                head.x < 0 || head.x >= snakeCanvas.width / gridSize ||
+                head.y < 0 || head.y >= snakeCanvas.height / gridSize
+            ) {
+                gameOver();
+                return;
+            }
+
+            // Cek tabrakan diri sendiri
+            for (let i = 1; i < snake.length; i++) {
+                if (head.x === snake[i].x && head.y === snake[i].y) {
+                    gameOver();
+                    return;
+                }
+            }
+
+            snake.unshift(head); // Tambahkan kepala baru
+
+            // Cek makan makanan
+            if (head.x === food.x && head.y === food.y) {
+                score++;
+                scoreDisplay.textContent = score;
+                generateFood(); // Hasilkan makanan baru
+                // Tingkatkan kecepatan sedikit setiap beberapa poin
+                if (score % 5 === 0 && gameSpeed > 50) {
+                    gameSpeed -= 10;
+                    clearInterval(gameInterval);
+                    gameInterval = setInterval(update, gameSpeed);
+                }
+            } else {
+                snake.pop(); // Hapus ekor jika tidak makan
+            }
+
+            draw();
+        }
+
+        /**
+         * Menghasilkan posisi makanan baru secara acak di grid.
+         */
+        function generateFood() {
+            let newFoodPos;
+            let collision;
+            do {
+                newFoodPos = {
+                    x: Math.floor(Math.random() * (snakeCanvas.width / gridSize)),
+                    y: Math.floor(Math.random() * (snakeCanvas.height / gridSize))
+                };
+                collision = snake.some(segment => segment.x === newFoodPos.x && segment.y === newFoodPos.y);
+            } while (collision); // Pastikan makanan tidak muncul di atas cacing
+
+            food = newFoodPos;
+        }
+
+        /**
+         * Menangani kejadian game over.
+         */
+        function gameOver() {
+            isGameOver = true;
+            clearInterval(gameInterval);
+            gameStatus.textContent = `Game Over! Skor akhirmu: ${score}`;
+            restartGameBtn.style.display = 'block'; // Tampilkan tombol restart
+        }
+
+        /**
+         * Menginisialisasi ulang game.
+         */
+        function startGame() {
+            snake = [{ x: 10, y: 10 }];
+            direction = '';
+            score = 0;
+            scoreDisplay.textContent = score;
+            gameSpeed = 150;
+            isGameOver = false;
+            gameStatus.textContent = 'Tekan tombol panah untuk memulai';
+            restartGameBtn.style.display = 'none'; // Sembunyikan tombol restart
+            generateFood();
+            draw(); // Gambar posisi awal
+            clearInterval(gameInterval); // Pastikan tidak ada interval lama yang berjalan
+        }
+
+        // --- Event Listeners untuk Game ---
+        document.addEventListener('keydown', e => {
+            if (isGameOver && e.key !== 'Enter') return; // Izinkan Enter untuk restart
+            if (!direction && ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+                // Mulai game hanya jika arah pertama kali diatur
+                gameInterval = setInterval(update, gameSpeed);
+                gameStatus.textContent = 'Bermain...';
+            }
+
+            // Mencegah gerakan mundur langsung
+            switch (e.key) {
+                case 'ArrowUp': if (direction !== 'down') direction = 'up'; break;
+                case 'ArrowDown': if (direction !== 'up') direction = 'down'; break;
+                case 'ArrowLeft': if (direction !== 'right') direction = 'left'; break;
+                case 'ArrowRight': if (direction !== 'left') direction = 'right'; break;
+            }
+        });
+
+        // Touch controls
+        upBtn.addEventListener('click', () => { if (direction !== 'down') direction = 'up'; if (!gameInterval) gameInterval = setInterval(update, gameSpeed); gameStatus.textContent = 'Bermain...'; });
+        downBtn.addEventListener('click', () => { if (direction !== 'up') direction = 'down'; if (!gameInterval) gameInterval = setInterval(update, gameSpeed); gameStatus.textContent = 'Bermain...'; });
+        leftBtn.addEventListener('click', () => { if (direction !== 'right') direction = 'left'; if (!gameInterval) gameInterval = setInterval(update, gameSpeed); gameStatus.textContent = 'Bermain...'; });
+        rightBtn.addEventListener('click', () => { if (direction !== 'left') direction = 'right'; if (!gameInterval) gameInterval = setInterval(update, gameSpeed); gameStatus.textContent = 'Bermain...'; });
+
+        restartGameBtn.addEventListener('click', startGame);
+
+        // Panggil startGame saat canvas game ditampilkan
+        // Ini memastikan game diinisialisasi ulang setiap kali section game diakses
+        const gameSection = document.getElementById('game');
+        const observer = new MutationObserver(mutations => {
+            mutations.forEach(mutation => {
+                if (mutation.attributeName === 'class' && gameSection.classList.contains('active')) {
+                    startGame();
+                }
+            });
+        });
+        observer.observe(gameSection, { attributes: true });
+
+
+        // --- Pomodoro Timer Logic ---
+        const timerDisplay = document.getElementById('timerDisplay');
+        const timerStatus = document.getElementById('timerStatus');
+        const startTimerBtn = document.getElementById('startTimerBtn');
+        const pauseTimerBtn = document.getElementById('pauseTimerBtn');
+        const resetTimerBtn = document.getElementById('resetTimerBtn');
+
+        let totalSeconds = 25 * 60; // 25 menit kerja
+        let currentMode = 'work'; // 'work' atau 'break'
+        let timerInterval;
+        let isTimerRunning = false;
+
+        const workDuration = 25 * 60; // 25 menit
+        const shortBreakDuration = 5 * 60; // 5 menit
+        const longBreakDuration = 15 * 60; // 15 menit (setelah 4 siklus kerja)
+        let pomodoroCount = 0;
+
+        /**
+         * Memformat waktu menjadi MM:SS.
+         * @param {number} seconds - Jumlah detik.
+         * @returns {string} Waktu dalam format MM:SS.
+         */
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            return `${minutes < 10 ? '0' : ''}${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+        }
+
+        /**
+         * Memperbarui tampilan timer setiap detik.
+         */
+        function updateTimerDisplay() {
+            totalSeconds--;
+            timerDisplay.textContent = formatTime(totalSeconds);
+
+            if (totalSeconds <= 0) {
+                clearInterval(timerInterval);
+                isTimerRunning = false;
+                playTimerSound(); // Mainkan suara saat timer selesai
+                if (currentMode === 'work') {
+                    pomodoroCount++;
+                    if (pomodoroCount % 4 === 0) {
+                        currentMode = 'longBreak';
+                        totalSeconds = longBreakDuration;
+                        timerStatus.textContent = 'Waktunya istirahat panjang!';
+                    } else {
+                        currentMode = 'shortBreak';
+                        totalSeconds = shortBreakDuration;
+                        timerStatus.textContent = 'Waktunya istirahat sejenak!';
+                    }
+                } else { // Jika sedang istirahat
+                    currentMode = 'work';
+                    totalSeconds = workDuration;
+                    timerStatus.textContent = 'Waktu untuk fokus!';
+                }
+                timerDisplay.textContent = formatTime(totalSeconds); // Update display ke waktu mode baru
+            }
+        }
+
+        /**
+         * Memulai timer.
+         */
+        function startTimer() {
+            if (!isTimerRunning) {
+                isTimerRunning = true;
+                timerInterval = setInterval(updateTimerDisplay, 1000);
+                timerStatus.textContent = currentMode === 'work' ? 'Fokus!' : 'Istirahat!';
+            }
+        }
+
+        /**
+         * Menjeda timer.
+         */
+        function pauseTimer() {
+            clearInterval(timerInterval);
+            isTimerRunning = false;
+            timerStatus.textContent = 'Jeda';
+        }
+
+        /**
+         * Mereset timer ke durasi awal mode saat ini.
+         */
+        function resetTimer() {
+            pauseTimer();
+            if (currentMode === 'work') {
+                totalSeconds = workDuration;
+                timerStatus.textContent = 'Waktu untuk fokus!';
+            } else if (currentMode === 'shortBreak') {
+                totalSeconds = shortBreakDuration;
+                timerStatus.textContent = 'Waktunya istirahat sejenak!';
+            } else { // longBreak
+                totalSeconds = longBreakDuration;
+                timerStatus.textContent = 'Waktunya istirahat panjang!';
+            }
+            timerDisplay.textContent = formatTime(totalSeconds);
+        }
+
+        /**
+         * Memainkan suara sederhana saat timer selesai.
+         */
+        function playTimerSound() {
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+
+                oscillator.type = 'sine'; // Bentuk gelombang (sine, square, sawtooth, triangle)
+                oscillator.frequency.setValueAtTime(440, audioContext.currentTime); // Frekuensi 440 Hz (A4)
+                gainNode.gain.setValueAtTime(0.5, audioContext.currentTime); // Volume
+
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.5); // Mainkan selama 0.5 detik
+            } catch (e) {
+                console.error("Web Audio API tidak didukung atau ada kesalahan: ", e);
+                // Fallback sederhana jika Web Audio API tidak tersedia/gagal
+                // new Audio('data:audio/wav;base64,...').play(); // Placeholder untuk audio dataURI jika diperlukan
+            }
+        }
+
+        // --- Event Listeners untuk Pomodoro ---
+        startTimerBtn.addEventListener('click', startTimer);
+        pauseTimerBtn.addEventListener('click', pauseTimer);
+        resetTimerBtn.addEventListener('click', resetTimer);
+
+        // Set display awal
+        timerDisplay.textContent = formatTime(totalSeconds);
+
+    </script>
+</body>
+</html>
